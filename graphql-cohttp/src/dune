@@ -1,9 +1,10 @@
 (rule
- (targets assets.ml)
- (deps
-  (source_tree assets))
- (action
-  (run %{bin:ocaml-crunch} -m plain assets -o assets.ml)))
+ (with-stdout-to
+  assets.ml
+  (progn
+   (echo "let index_html = {html|")
+   (cat assets/index.html)
+   (echo "|html}"))))
 
 (library
  (name graphql_cohttp)

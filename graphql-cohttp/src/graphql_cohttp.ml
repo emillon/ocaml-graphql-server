@@ -129,8 +129,10 @@ struct
     Io.return
       (`Response (Cohttp.Response.make ~status (), Body.of_string body))
 
+  let asset = function "index.html" -> Some Assets.index_html | _ -> None
+
   let static_file_response path =
-    match Assets.read path with
+    match asset path with
     | Some body -> respond_string ~status:`OK ~body ()
     | None -> respond_string ~status:`Not_found ~body:"" ()
 
